@@ -20,6 +20,12 @@ let con = dbConnection.con;
 con.connect((err) => {
     if (err) throw(err);
 });
+const newTopic = {
+    name: "test topic",
+    description:"This is test description."
+}
+
+con.query('INSERT INTO topics (topicName, topicDescription) VALUES ("'+newTopic.name+'","'+newTopic.description+'");');
 
 //routes
 app.get('/postCreate', (req, res) => {
@@ -29,7 +35,7 @@ app.get('/postCreate', (req, res) => {
 //post methods
 app.post("/createPost", (req, res) => {
     cp.cp(req.body.author, req.body.text, req.body.postName);
-    console.log(req.body.postText);
+    console.log(req.body);
     res.send('ok');     
 });
 

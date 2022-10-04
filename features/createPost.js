@@ -10,5 +10,6 @@ const app = express();
 exports.cp = () => {
     (author, text, postName) => {
         dbBoiler.generate();
+        
     }
 }
