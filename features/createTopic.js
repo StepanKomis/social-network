@@ -13,6 +13,4 @@ exports.createTopic = (name, description) => {
     console.log('test');
     console.log('topic name:' + name + ', '+ 'description' + description);
     con.query('INSERT INTO topics (topicName, topicDescription) VALUES ("'+name+'","'+description+'");');
-
-    console.log(con.query('SELECT topicName FROM topics;'));
 };
