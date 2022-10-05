@@ -39,4 +39,4 @@ CREATE TABLE IF NOT EXISTS logo(
     logoName VARCHAR(255) NOT NULL,
     logoPath TEXT NOT NULL,
     
-)
+);

@@ -22,20 +22,14 @@ app.set('view engine', 'ejs');
 //database connection
 let con = dbConnection.con;
 
-/*
-con.connect((err) => {
-    if (err) throw(err);
-});
-*/
-
 //routes
 app.get('/createTopic', (req, res) => {
     res.render('createTopic');
 });
 
 app.get('/topics', (req, res) => {
+    topics.topicRender();
     res.render('topics');
-    topics.databaseFetch();
 });
 
 //post methods
