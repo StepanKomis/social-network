@@ -28,8 +28,11 @@ app.get('/createTopic', (req, res) => {
 });
 
 app.get('/topics', (req, res) => {
-    topics.topicRender();
-    res.render('topics');
+    let query = 'SELECT * FROM topics ORDER BY id DESC;';
+    con.query(query,(err, result) =>{
+        res.render('topics', {topicData: result, test: 'working'});
+    });
+    
 });
 
 //post methods
