@@ -30,7 +30,7 @@ app.get('/createTopic', (req, res) => {
 app.get('/topics', (req, res) => {
     let query = 'SELECT * FROM topics ORDER BY id DESC;';
     con.query(query,(err, result) =>{
-        res.render('topics', {topicData: result, test: 'working'});
+        res.render('topics', {topicData: result});
     });
     
 });
@@ -43,3 +43,4 @@ app.post("/createTopic", (req, res) => {
 
 //listen on port
 app.listen(port);
+

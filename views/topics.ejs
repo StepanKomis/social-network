@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,11 @@
 </head>
 <body>
     <nav class="navbr">
-        <%= topicData[1].topicName %> 
+        <% for (let i = 0; i < topicData.length; i++) { %>
+            <% const element = topicData[i]; %>
+            <%= element.topicName %><br>
+        <% } %>
+
     </nav>
 </body>
 </html>
