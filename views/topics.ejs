@@ -9,11 +9,23 @@
 </head>
 <body>
     <nav class="navbr">
-        <% for (let i = 0; i < topicData.length; i++) { %>
-            <% const element = topicData[i]; %>
-            <%= element.topicName %><br>
-        <% } %>
 
     </nav>
+
+    <article>
+        <% for (let i = 0; i < topicData.length; i++) { %>
+            <% const element = topicData[i]; %>
+            <div>
+                <h1>            
+                    <%= element.topicName %>
+                </h1>
+                <h2>
+                    <%= element.topicDescription %>
+                    
+                </h2>
+                <%= element.id %>
+            </div>
+        <% } %>
+    </article>
 </body>
 </html>

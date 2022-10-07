@@ -5,12 +5,18 @@ const mysql = require('mysql');
 const ct = require('./features/createTopic');
 const dbConnection = require('./database/connection');
 const topics = require('./pages/topics');
+const topicRouter = require('./routes/topicsRouter');
+
+
+const { request } = require('express');
 const app = express();
 const port = 5000;
 
 
 //public folder
 app.use(express.static(__dirname + '/public'));
+
+
 
 //body parser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,16 +29,16 @@ app.set('view engine', 'ejs');
 let con = dbConnection.con;
 
 //routes
-app.get('/createTopic', (req, res) => {
-    res.render('createTopic');
-});
+app.use('/topics', topicRouter);
 
-app.get('/topics', (req, res) => {
-    let query = 'SELECT * FROM topics ORDER BY id DESC;';
-    con.query(query,(err, result) =>{
-        res.render('topics', {topicData: result});
-    });
-    
+
+
+
+app.get('/topics/:id', (req, res) => {
+    topic = req.url;
+    topic = topic.split('/topics/')[1];
+    res.send(topic);
+    console.log(topic);
 });
 
 //post methods
