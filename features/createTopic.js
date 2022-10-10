@@ -4,7 +4,6 @@ const dotenv = require('dotenv').config();
 const dbBoiler = require('../database/boilerplate');
 const dbConnection = require('../database/connection');
 const express = require('express');
-const Latinise = require('../latinise');
 const app = express();
 
 let con = dbConnection.con;

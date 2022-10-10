@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 const dbConnection = require('../database/connection');
 const ct = require('../features/createTopic');
-const Latinise = require('../latinise');
 
 const con = dbConnection.con;
 
