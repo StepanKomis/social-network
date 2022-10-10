@@ -9,9 +9,9 @@ const app = express();
 let con = dbConnection.con;
 
 //creating topic section
-exports.createTopic = (name, description) => {
-    let adressName = name
-    adressName = name.normalize("NFD").replace(/[\u0300-\u036f-\ ]/g, "");
-    console.log('topic name:' + name + ', description: ' + description + ', adressName: ' + adressName);
-    con.query('INSERT INTO topics (topicName, topicDescription, adressName) VALUES ("'+name+'","'+description+'","'+adressName+'");');
+exports.createTopic = (name, description, addressName) => {
+
+
+            console.log('topic name:' + name + ', description: ' + description + ', addressName: ' + addressName);
+            con.query('INSERT INTO topics (topicName, topicDescription, addressName) VALUES ("'+name+'","'+description+'","'+addressName+'");');        
 };

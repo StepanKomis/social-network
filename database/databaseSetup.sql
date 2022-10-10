@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS topics (
     id int NOT NULL AUTO_INCREMENT,
     topicName varchar(255) NOT NULL,
     topicDescription varchar(255) NOT NULL,
+    addressName VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY ( id )
 );
 --@block
@@ -43,5 +44,4 @@ CREATE TABLE IF NOT EXISTS logo(
 
 --@block
 
-ALTER TABLE topics
-ADD COLUMN adressName VARCHAR(255) AFTER topicDescription;
+DROP DATABASE IF exists socialNetwork 
