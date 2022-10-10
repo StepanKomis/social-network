@@ -40,3 +40,8 @@ CREATE TABLE IF NOT EXISTS logo(
     logoPath TEXT NOT NULL,
     
 );
+
+--@block
+
+ALTER TABLE topics
+ADD COLUMN adressName VARCHAR(255) AFTER topicDescription;

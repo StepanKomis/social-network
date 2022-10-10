@@ -31,21 +31,8 @@ let con = dbConnection.con;
 //routes
 app.use('/topics', topicRouter);
 
-
-
-
-app.get('/topics/:id', (req, res) => {
-    topic = req.url;
-    topic = topic.split('/topics/')[1];
-    res.send(topic);
-    console.log(topic);
-});
-
 //post methods
-app.post("/createTopic", (req, res) => {
-    ct.createTopic(req.body.topicName, req.body.topicDescription);
-    res.send('ok');     
-});
+
 
 //listen on port
 app.listen(port);
