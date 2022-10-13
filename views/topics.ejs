@@ -14,10 +14,10 @@
     </nav>
 
     <article>
-        <a href="./create">create new one!</a>
+        <a href="topics/create">create new one!</a>
         <% for (let i = 0; i < topicData.length; i++) { %>
             <% const element = topicData[i]; %>
-            <a class="topicLink" href="<%= element.addressName %>">
+            <a class="topicLink" href="topics/<%= element.addressName %>">
                 <div class="topicContainer">
             
                     <h1>            

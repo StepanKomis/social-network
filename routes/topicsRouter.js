@@ -27,9 +27,9 @@ router.get('/:id', (req, res) => {
     topic = topic.split('/')[1];
     const query = 'SELECT * FROM topics WHERE addressName="'+topic+'";';
     con.query(query,(err, result) =>{
-        const name = result[0].topicName; 
+        const name = result[0].topicName;
         const description = result[0].topicDescription
-        res.render('topic', {name: name});
+        res.render('topic', {name: name, description: description});
         console.log(result);
     });
 });

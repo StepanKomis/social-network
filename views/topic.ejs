@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/topics.css">
     <title>Document</title>
 </head>
 <body>
-    <h1>you are on topic: <%= name %> </h1>
+    <nav>
+        <a id="backToTopics" href="/topics">home</a>
+
+    </nav>
+    <article>
+        <h1 id="topicName">you are on topic: <%= name %> </h1>
+        <p class="topicDescription"><%= description %></p>
+        <a id="createPost" href="">Create new post</a>
+    </article>
 </body>
 </html>

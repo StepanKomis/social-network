@@ -10,3 +10,17 @@
     margin-bottom: 5vh;
     padding: 2%;
 }
+.topicDescription{
+    font-size: 150%;
+}
+#createPost{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    background: #4036AB;
+    padding: 5%;
+}
+#topicName{
+    color: black;
+    font-size: 200%;
+}
