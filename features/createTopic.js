@@ -10,8 +10,6 @@ let con = dbConnection.con;
 
 //creating topic section
 exports.createTopic = (name, description, addressName) => {
-
-
             console.log('topic name:' + name + ', description: ' + description + ', addressName: ' + addressName);
             con.query('INSERT INTO topics (topicName, topicDescription, addressName) VALUES ("'+name+'","'+description+'","'+addressName+'");');        
 };

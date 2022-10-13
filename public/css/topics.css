@@ -1,0 +1,12 @@
+.topicLink{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.topicContainer{
+    background-color: #ffff;
+    width: 45%;
+    margin-inline: 27.5%;
+    margin-bottom: 5vh;
+    padding: 2%;
+}
