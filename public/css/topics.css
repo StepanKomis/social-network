@@ -4,9 +4,10 @@
     cursor: pointer;
 }
 .topicContainer{
+    position: relative;
     background-color: #ffff;
     width: 45%;
-    margin-inline: 27.5%;
+    left: 27.5%;
     margin-bottom: 5vh;
     padding: 2%;
 }
@@ -18,9 +19,18 @@
     text-decoration: none;
     cursor: pointer;
     background: #4036AB;
-    padding: 5%;
+    padding: 1%;
+    float: right;
 }
 #topicName{
     color: black;
     font-size: 200%;
+}
+.postContainer{
+    background-color: #ffff;
+    width: 60%;
+    height: auto;
+    margin-top: 12vh;
+    margin-left: 20%;
+    padding: 1%;
 }

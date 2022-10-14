@@ -19,15 +19,16 @@
             <% const element = topicData[i]; %>
             <a class="topicLink" href="topics/<%= element.addressName %>">
                 <div class="topicContainer">
-            
-                    <h1>            
-                        <%= element.topicName %>
-                    </h1>
-                    <p>
-                        <%= element.topicDescription %>
-                    </p>
+                        <div class="topicLinkText"></div>
+                        <h1>            
+                            <%= element.topicName %>
+                        </h1>
+                        <p>
+                            <%= element.topicDescription %>
+                        </p>
+                    
                 </div>
-             </a>
+            </a>
             <% } %>
                 
     </article>

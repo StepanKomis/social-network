@@ -6,17 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/default.css">
     <link rel="stylesheet" href="/css/topics.css">
-    <title>Document</title>
+    <title><%=name%></title>
 </head>
 <body>
     <nav>
-        <a id="backToTopics" href="/topics">home</a>
-
+        <a id="backToTopics" href="/topics">home</a><br>
     </nav>
+    <a id="createPost" href="">Create new post</a>
     <article>
-        <h1 id="topicName">you are on topic: <%= name %> </h1>
-        <p class="topicDescription"><%= description %></p>
-        <a id="createPost" href="">Create new post</a>
+        <div class="postContainer">
+            <h1 id="topicName"><%= name.toUpperCase() %> </h1>
+            <p class="topicDescription"><%= description %></p>
+        </div>
     </article>
 </body>
 </html>
