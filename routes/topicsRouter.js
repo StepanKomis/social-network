@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const express = require('express');
 const router = express.Router();
 const dbConnection = require('../database/connection');
-const ct = require('../features/createTopic');
+const ct = require('../features/topics/createTopic');
 const { promiseImpl } = require('ejs');
 
 const con = dbConnection.con;
@@ -36,6 +36,7 @@ router.get('/:id', (req, res) => {
 
 //creating a new topics
 router.post("/create", (req, res) => {
+    
     const name = req.body.topicName;
     let addressName = name
     //getting rid of the diacritics from the name of topic

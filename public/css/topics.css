@@ -4,8 +4,8 @@
     cursor: pointer;
 }
 .topicContainer{
-    position: relative;
-    background-color: #ffff;
+    position: absolute;
+    display: block;
     width: 45%;
     left: 27.5%;
     margin-bottom: 5vh;
@@ -33,4 +33,14 @@
     margin-top: 12vh;
     margin-left: 20%;
     padding: 1%;
+}
+.mainBlock{
+    width: 60%;
+}
+.eachTopic{
+    padding: 2%;
+    padding-inline: 4%;
+    margin-top: 2rem;
+    background-color: #ffff;
+    min-height: 12rem;
 }

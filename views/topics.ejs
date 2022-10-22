@@ -10,27 +10,26 @@
 </head>
 <body>
     <nav class="navbr">
+        <a href="topics/create">create new one!</a>
 
     </nav>
 
     <article>
-        <a href="topics/create">create new one!</a>
+        <div class="topicContainer">
         <% for (let i = 0; i < topicData.length; i++) { %>
             <% const element = topicData[i]; %>
             <a class="topicLink" href="topics/<%= element.addressName %>">
-                <div class="topicContainer">
-                        <div class="topicLinkText"></div>
-                        <h1>            
-                            <%= element.topicName %>
-                        </h1>
-                        <p>
-                            <%= element.topicDescription %>
-                        </p>
-                    
+                <div class="eachTopic">
+                    <h1 class="">
+                        <%= element.topicName %>
+                    </h1>
+                    <p>
+                        <%= element.topicDescription %>
+                    </p>
                 </div>
             </a>
             <% } %>
-                
+        </div>
     </article>
 </body>
 </html>
