@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS topics (
     id int NOT NULL AUTO_INCREMENT,
     topicName varchar(255) NOT NULL,
-    topicDescription varchar(255) NOT NULL,
+    topicDescription varchar(1020) NOT NULL,
     addressName VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY ( id )
 );
@@ -44,4 +44,7 @@ CREATE TABLE IF NOT EXISTS logo(
 
 --@block
 
-DROP DATABASE IF exists socialNetwork 
+DROP DATABASE IF exists socialNetwork
+
+--@block
+DROP TABLE topics;

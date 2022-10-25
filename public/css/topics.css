@@ -44,3 +44,9 @@
     background-color: #ffff;
     min-height: 12rem;
 }
+.topicName{
+    font-size: 250%;
+}
+.topicDescription{
+    font-size: 120%;
+}
