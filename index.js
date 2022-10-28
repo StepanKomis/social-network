@@ -25,7 +25,7 @@ app.set('view engine', 'ejs');
 let con = dbConnection.con;
 
 //routes
-app.use('/topics', topicRouter);
+app.use('/t', topicRouter);
 
 //listen on port
 app.listen(port);

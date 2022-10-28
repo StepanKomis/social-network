@@ -7,6 +7,5 @@ const con = dbConnection.con;
 let query = 'SELECT * FROM topics ORDER BY id DESC;';
 
 exports.dataShorter =  (res) => {
-
     
 };

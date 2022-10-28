@@ -5,6 +5,7 @@ const dbConnection = require('../database/connection');
 const ct = require('../features/topics/createTopic');
 const validate = require("validatorjs");
 const { promiseImpl } = require('ejs');
+const { application } = require('express');
 
 const con = dbConnection.con;
 
@@ -12,26 +13,26 @@ const con = dbConnection.con;
 router.get('/', (req, res) => {
     let query = 'SELECT * FROM topics ORDER BY id DESC LIMIT 10;';
     con.query(query,(err, result) =>{
-        res.render('topics', {topicData: result});
+        res.render('topics/topics', {topicData: result});
 
     });
 });
 
 //topic create
 router.get('/create', (req, res) => {
-    res.render('createTopic');
+    res.render('topics/createTopic');
 });
 
 //topic
 router.get('/:id', (req, res) => {
     topic = req.url;
     topic = topic.split('/')[1];
+    adrName = topic;
     const query = 'SELECT * FROM topics WHERE addressName="'+topic+'";';
     con.query(query,(err, result) =>{
         const name = result[0].topicName;
         const description = result[0].topicDescription
-        res.render('topic', {name: name, description: description});
-        console.log(result);
+        res.render('topics/topic', {name: name, description: description, adrName: adrName});
     });
 });
 
@@ -55,8 +56,8 @@ router.post("/create", (req, res) => {
     //if validation was succsesful
     validation.passes(()=>{
         //getting rid of the diacritics from the name of topic
-        addressName = topicData.name.normalize("NFD").replace(/[\u0300-\u036f-\ ]/g, "");
-
+        addressName = req.params.id;
+        
         //checking if topic is already in the database
         const query = 'SELECT * FROM topics WHERE addressName="'+addressName+'";';
         con.query(query, function(err, result) {
@@ -76,5 +77,10 @@ router.post("/create", (req, res) => {
         res.send('validation failed');
     });
 });
+
+router.get('/:id/new', (req, res) => {
+    res.render('posts/createNew', {topicName: req.params.id});
+})
+
 
 module.exports = router;
