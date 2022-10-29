@@ -85,25 +85,36 @@ router.get('/:topic/new', (req, res) => {
 router.post('/:topic/created', (req, res) => {
     const postName = req.body.postName;
     console.log(postName);
-    const data = {
-        topic: req.params.topic,
-        name: req.body.postName,
-        author: req.body.author,
-        text: req.body.postText
-    }
-    if (data.author === undefined || data.author ===''){
-        data.author = 'Anonimous';
-    }
-    console.log(data);
-    cp.createPost(data.text, data.name, data.author, data.topic);
-
-    const query = 'SELECT id FROM posts WHERE postName = "'+data.name+'"';
-    con.query(query,(err, result) =>{
-        id = result[0].id;
-        console.log('id: '+id);
-        res.redirect('/t/'+req.params.topic+'/p/'+id);
-    });
+    const uniqueQuery = 'SELECT * FROM posts WHERE postName="'+postName+'";';
+    con.query(uniqueQuery,(err, result) =>{
+        if (result.length > 0) {
+            res.send("post already exists");
+            return;
+        }
+        else{
+            const data = {
+                topic: req.params.topic,
+                name: req.body.postName,
+                author: req.body.author,
+                text: req.body.postText
+            }
+            
+            if (data.author === undefined || data.author ===''){
+                data.author = 'Anonimous';
+            }
+            console.log(data);
+            cp.createPost(data.text, data.name, data.author, data.topic);
+        
+            const idQuery = 'SELECT id FROM posts WHERE postName = "'+data.name+'"';
+            con.query(idQuery,(err, result) =>{
+                id = result[0].id;
+                console.log('id: '+id);
+                res.redirect('/t/'+req.params.topic+'/p/'+id);
+            });
+        }
+    })
 });
+    
 
 router.get('/:topic/p/:post', (req, res)=>{
     res.send('lol')
