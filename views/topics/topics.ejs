@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav class="navbr">
-        <a href="t/create">create new one!</a>
+        <a href="/t/create">create new one!</a>
 
     </nav>
 
@@ -18,7 +18,7 @@
         <div class="topicContainer">
         <% for (let i = 0; i < topicData.length; i++) { %>
             <% const element = topicData[i]; %>
-            <a class="topicLink" href="t/<%= element.addressName %>">
+            <a class="topicLink" href="/t/<%= element.addressName %>">
                 <div class="eachTopic">
                     <h1 class="topicName">
                         <%= element.topicName %>

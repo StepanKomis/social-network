@@ -7,11 +7,14 @@
     <title>posting on t/<%= topicName %> </title>
 </head>
 <body>
-    <form action="post">
-        <input type="text" name="postName" id="postName">
-        <textarea name="text" id="" cols="30" rows="10"></textarea>
-        <input type="file" name="postMedia" id="postMedia">
-        <input type="submit" value="POST!">
-        </form>
+    <form action="/t/<%= topicName %>/created" method="post">
+        <label for="postName">Name of post</label>
+        <input type="text" name="postName" id="text"><br>
+        <label for="postText">Description of post</label>
+        <textarea name="postText" id="text"></textarea><br>
+        <label for="author">Author of post</label>
+        <input type="text" name="author" id="author"><br>
+        <input type="submit" value="Create!">
+    </form>
 </body>
 </html>

@@ -15,7 +15,7 @@ const port = 5000;
 app.use(express.static(__dirname + '/public'));
 
 //body parser
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //viewport

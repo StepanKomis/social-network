@@ -9,12 +9,12 @@ CREATE TABLE IF NOT EXISTS topics (
 --@block
 CREATE TABLE IF NOT EXISTS posts(
     id int NOT NULL AUTO_INCREMENT,
-    topicId int NOT NULL,
+    topicName VARCHAR(255) NOT NULL,
     postName VARCHAR(255) NOT NULL,
     postText TEXT NOT NULL,
     author VARCHAR(255) NOT NULL DEFAULT 'Anonimous',
     creationDate VARCHAR(20) NOT NULL,
-    PRIMARY KEY (id), FOREIGN KEY (topicId) REFERENCES topics (id)
+    PRIMARY KEY (id)
 );
 --@block
 CREATE TABLE IF NOT EXISTS comments(
@@ -34,17 +34,24 @@ CREATE TABLE IF NOT EXISTS media(
 );
 
 --@block
-CREATE TABLE IF NOT EXISTS logo(
-    id INT NOT NULL AUTO_INCREMENT,
-    topicId INT NOT NULL,
-    logoName VARCHAR(255) NOT NULL,
-    logoPath TEXT NOT NULL,
-    
-);
 
---@block
-
-DROP DATABASE IF exists socialNetwork
+DROP DATABASE IF exists socialNetwork;
 
 --@block
 DROP TABLE topics;
+
+--@block
+INSERT INTO posts (postName, postText, author, topicName, creationDate) 
+VALUES (
+    "first post",
+    "this is very long text",
+    
+);
+--@block
+SELECT id FROM posts WHERE postName = "first";
+
+--@block
+SELECT * FROM posts;
+
+--@block
+DELETE FROM posts WHERE postName = "first"

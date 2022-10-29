@@ -6,15 +6,16 @@ const ct = require('../features/topics/createTopic');
 const validate = require("validatorjs");
 const { promiseImpl } = require('ejs');
 const { application } = require('express');
+const cp = require('./../features/topics/posts/createPost');  
 
 const con = dbConnection.con;
 
 //topics
 router.get('/', (req, res) => {
+
     let query = 'SELECT * FROM topics ORDER BY id DESC LIMIT 10;';
     con.query(query,(err, result) =>{
         res.render('topics/topics', {topicData: result});
-
     });
 });
 
@@ -28,6 +29,7 @@ router.get('/:id', (req, res) => {
     topic = req.url;
     topic = topic.split('/')[1];
     adrName = topic;
+    console.log(adrName);
     const query = 'SELECT * FROM topics WHERE addressName="'+topic+'";';
     con.query(query,(err, result) =>{
         const name = result[0].topicName;
@@ -52,16 +54,14 @@ router.post("/create", (req, res) => {
 
     //validating post data
     const validation = new validate(topicData, valRules);
-    
     //if validation was succsesful
     validation.passes(()=>{
         //getting rid of the diacritics from the name of topic
-        addressName = req.params.id;
-        
+        addressName = topicData.name.normalize("NFD").replace(/[\u0300-\u036f-\ ]/g, "");
+        console.log(addressName);
         //checking if topic is already in the database
         const query = 'SELECT * FROM topics WHERE addressName="'+addressName+'";';
         con.query(query, function(err, result) {
-            console.log(result);
             if (result.length > 0) {
                 res.send("topic already exists");
                 return;
@@ -78,9 +78,36 @@ router.post("/create", (req, res) => {
     });
 });
 
-router.get('/:id/new', (req, res) => {
-    res.render('posts/createNew', {topicName: req.params.id});
-})
+router.get('/:topic/new', (req, res) => {
+    res.render('posts/createNew', {topicName: req.params.topic});
+});
+
+router.post('/:topic/created', (req, res) => {
+    const postName = req.body.postName;
+    console.log(postName);
+    const data = {
+        topic: req.params.topic,
+        name: req.body.postName,
+        author: req.body.author,
+        text: req.body.postText
+    }
+    if (data.author === undefined || data.author ===''){
+        data.author = 'Anonimous';
+    }
+    console.log(data);
+    cp.createPost(data.text, data.name, data.author, data.topic);
+
+    const query = 'SELECT id FROM posts WHERE postName = "'+data.name+'"';
+    con.query(query,(err, result) =>{
+        id = result[0].id;
+        console.log('id: '+id);
+        res.redirect('/t/'+req.params.topic+'/p/'+id);
+    });
+});
+
+router.get('/:topic/p/:post', (req, res)=>{
+    res.send('lol')
+});
 
 
 module.exports = router;
