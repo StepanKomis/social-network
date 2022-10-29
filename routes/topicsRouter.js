@@ -104,20 +104,33 @@ router.post('/:topic/created', (req, res) => {
             }
             console.log(data);
             cp.createPost(data.text, data.name, data.author, data.topic);
-        
-            const idQuery = 'SELECT id FROM posts WHERE postName = "'+data.name+'"';
-            con.query(idQuery,(err, result) =>{
-                id = result[0].id;
-                console.log('id: '+id);
-                res.redirect('/t/'+req.params.topic+'/p/'+id);
-            });
+            res.redirect('/t/'+req.params.topic);
         }
     })
 });
     
 
 router.get('/:topic/p/:post', (req, res)=>{
-    res.send('lol')
+    const data = {
+        topic: req.params.topic,
+        post: req.params.post,
+    }
+    let query = 'SELECT * FROM posts WHERE topicName = "'+data.topic+'" AND id = '+data.post+'';
+    con.query(query,(err, result) =>{
+        if (result != undefined) {
+            let postData = result[0];
+            query = 'SELECT topicName, addressName FROM topics WHERE addressName = "'+data.topic+'"';
+            con.query(query,(err, result) =>{
+                let topicData = result[0];
+                console.log(topicData);
+                res.render('posts/post', {postData: postData, topicData: topicData});
+            });
+        }
+        else{
+            res.send('no such post');
+        }
+        
+    });
 });
 
 

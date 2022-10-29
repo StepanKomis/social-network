@@ -54,4 +54,4 @@ SELECT id FROM posts WHERE postName = "first";
 SELECT * FROM posts;
 
 --@block
-DELETE FROM posts WHERE postName = "first"
+SELECT * FROM posts WHERE topicName = "testingtopic" AND id = 17

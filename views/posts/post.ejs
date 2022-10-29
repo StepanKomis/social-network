@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= postData.postName %> from <%= topicData.topicName %></title>
+</head>
+<body>
+    <a href="/t/<%= topicData.addressName %> ">back</a>
+    <h1><%= postData.postName %> </h1>
+    <h2><%= postData.author %></h2>
+    <h2><%= postData.creationDate %></h2>
+
+    <p>
+        <%= postData.postText %> 
+    </p>
+</body>
+</html>
