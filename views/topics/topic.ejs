@@ -15,9 +15,20 @@
 
     </nav>
     <article>
-        <div class="postContainer">
+        <div class="topicHeader">
             <h1 id="topicName"><%= name.toUpperCase() %> </h1>
             <p class="topicDescription"><%= description %></p>
+        </div>
+        <div>
+              <% for( let i = 0; i < postData.length; i++ ) { %>
+                <% const element = postData[i]; %>
+                <a href="/t/<%= adrName %>/p/<%=element.id%>">
+                    <div class="postContainer">
+                        <h2 class="topicName"><%= element.postName %></h2>
+                        <p><%= element.postText%></p> 
+                    </div>
+                </a>
+              <% } %>
         </div>
     </article>
 </body>

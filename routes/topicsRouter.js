@@ -25,16 +25,21 @@ router.get('/create', (req, res) => {
 });
 
 //topic
-router.get('/:id', (req, res) => {
+router.get('/:topic', (req, res) => {
     topic = req.url;
     topic = topic.split('/')[1];
     adrName = topic;
     console.log(adrName);
-    const query = 'SELECT * FROM topics WHERE addressName="'+topic+'";';
+    let query = 'SELECT * FROM topics WHERE addressName="'+topic+'";';
     con.query(query,(err, result) =>{
         const name = result[0].topicName;
         const description = result[0].topicDescription
-        res.render('topics/topic', {name: name, description: description, adrName: adrName});
+        query = 'SELECT * FROM posts ORDER BY id DESC LIMIT 15';
+        con.query(query, (err, result) =>{
+            const postData = result;
+            console.log(postData);
+            res.render('topics/topic', {name: name, description: description, adrName: adrName, postData: result});
+        });
     });
 });
 

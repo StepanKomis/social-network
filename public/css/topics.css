@@ -26,11 +26,19 @@
     color: black;
     font-size: 200%;
 }
-.postContainer{
+.topicHeader{
     background-color: #ffff;
     width: 60%;
     height: auto;
     margin-top: 12vh;
+    margin-left: 20%;
+    padding: 1%;
+}
+.postContainer{
+    background-color: #ffff;
+    width: 60%;
+    height: auto;
+    margin-top: 6vh;
     margin-left: 20%;
     padding: 1%;
 }
