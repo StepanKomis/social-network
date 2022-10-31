@@ -7,6 +7,7 @@ const validate = require("validatorjs");
 const { promiseImpl } = require('ejs');
 const { application } = require('express');
 const cp = require('./../features/topics/posts/createPost');  
+const func = require('./../features/topicFunctions');
 
 const con = dbConnection.con;
 
@@ -29,7 +30,6 @@ router.get('/:topic', (req, res) => {
     topic = req.url;
     topic = topic.split('/')[1];
     adrName = topic;
-    console.log(adrName);
     let query = 'SELECT * FROM topics WHERE addressName="'+topic+'";';
     con.query(query,(err, result) =>{
         const name = result[0].topicName;
@@ -37,8 +37,17 @@ router.get('/:topic', (req, res) => {
         query = 'SELECT * FROM posts ORDER BY id DESC LIMIT 15';
         con.query(query, (err, result) =>{
             const postData = result;
-            console.log(postData);
-            res.render('topics/topic', {name: name, description: description, adrName: adrName, postData: result});
+            postData.forEach(element => {
+                element.postText = func.short(element.postText, 150);
+                let test = element.postText;
+            });
+            
+            res.render('topics/topic', {
+                name: name,
+                description: description,
+                adrName: adrName,
+                postData: result
+            });
         });
     });
 });
@@ -63,7 +72,6 @@ router.post("/create", (req, res) => {
     validation.passes(()=>{
         //getting rid of the diacritics from the name of topic
         addressName = topicData.name.normalize("NFD").replace(/[\u0300-\u036f-\ ]/g, "");
-        console.log(addressName);
         //checking if topic is already in the database
         const query = 'SELECT * FROM topics WHERE addressName="'+addressName+'";';
         con.query(query, function(err, result) {
@@ -89,7 +97,6 @@ router.get('/:topic/new', (req, res) => {
 
 router.post('/:topic/created', (req, res) => {
     const postName = req.body.postName;
-    console.log(postName);
     const uniqueQuery = 'SELECT * FROM posts WHERE postName="'+postName+'";';
     con.query(uniqueQuery,(err, result) =>{
         if (result.length > 0) {
@@ -107,14 +114,11 @@ router.post('/:topic/created', (req, res) => {
             if (data.author === undefined || data.author ===''){
                 data.author = 'Anonimous';
             }
-            console.log(data);
             cp.createPost(data.text, data.name, data.author, data.topic);
             res.redirect('/t/'+req.params.topic);
         }
     })
 });
-    
-
 router.get('/:topic/p/:post', (req, res)=>{
     const data = {
         topic: req.params.topic,
@@ -127,14 +131,12 @@ router.get('/:topic/p/:post', (req, res)=>{
             query = 'SELECT topicName, addressName FROM topics WHERE addressName = "'+data.topic+'"';
             con.query(query,(err, result) =>{
                 let topicData = result[0];
-                console.log(topicData);
                 res.render('posts/post', {postData: postData, topicData: topicData});
             });
         }
         else{
             res.send('no such post');
         }
-        
     });
 });
 
