@@ -1,0 +1,1 @@
+npm i express ejs body-parser mysql dotenv cors express-fileupload morgan lodash
