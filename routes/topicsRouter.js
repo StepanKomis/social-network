@@ -34,7 +34,7 @@ router.get('/:topic', (req, res) => {
     con.query(query,(err, result) =>{
         const name = result[0].topicName;
         const description = result[0].topicDescription
-        query = 'SELECT * FROM posts ORDER BY id DESC LIMIT 15';
+        query = 'SELECT * FROM posts WHERE topicName = "'+topic+'" ORDER BY id DESC LIMIT 15';
         con.query(query, (err, result) =>{
             const postData = result;
             postData.forEach(element => {
@@ -119,7 +119,8 @@ router.post('/:topic/created', (req, res) => {
         }
     })
 });
-router.get('/:topic/p/:post', (req, res)=>{
+
+router.get('/:topic/p/:identifier', (req, res)=>{
     const data = {
         topic: req.params.topic,
         post: req.params.post,
@@ -139,6 +140,11 @@ router.get('/:topic/p/:post', (req, res)=>{
         }
     });
 });
+router.get('/:topic/:pageNum', (req, res) =>{
+    const data = {
 
+    }
+
+})
 
 module.exports = router;
