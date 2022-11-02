@@ -27,5 +27,9 @@ let con = dbConnection.con;
 //routes
 app.use('/t', topicRouter);
 
+app.get('/', (req, res) => {
+    res.redirect('/t')
+});;
+
 //listen on port
 app.listen(port);
