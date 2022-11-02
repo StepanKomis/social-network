@@ -4,7 +4,6 @@ const dotenv = require('dotenv').config();
 const mysql = require('mysql');
 const ct = require('./features/topics/createTopic');
 const dbConnection = require('./database/connection');
-const topics = require('./pages/topics');
 const topicRouter = require('./routes/topicsRouter');
 
 const { request } = require('express');
