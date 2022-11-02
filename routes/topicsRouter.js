@@ -81,7 +81,8 @@ router.post("/create", (req, res) => {
             }
             else{
                 ct.createTopic(topicData.name, topicData.description, addressName);
-                res.send('ok');
+                res.redirect('/');
+
             }
         });
     });
@@ -89,6 +90,7 @@ router.post("/create", (req, res) => {
     validation.fails(()=>{
         res.send('validation failed');
     });
+
 });
 
 router.get('/:topic/new', (req, res) => {
@@ -140,7 +142,22 @@ router.get('/:topic/p/:identifier', (req, res)=>{
         }
     });
 });
-router.get('/:topic/:pageNum', (req, res) =>{
+router.get('/pg/:pageNum', (req, res) =>{
+    const data = {
+        pageNum: parseInt(req.params.pageNum)*15-15,
+    }
+    let query = 'SELECT * FROM topics ORDER BY id DESC LIMIT '+data.pageNum+', 15';
+    con.query(query, (err, result)=>{
+        if (result.length !== 0){
+            res.render('topics/topics', { topicData: result});
+        }
+        else{
+            res.send('to much pages');
+        }
+        console.log(result);
+    });
+})
+router.get('/:topic/pg/:pageNum', (req, res) =>{
     const data = {
 
     }
