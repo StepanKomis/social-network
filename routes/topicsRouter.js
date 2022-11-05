@@ -8,15 +8,20 @@ const { promiseImpl } = require('ejs');
 const { application } = require('express');
 const cp = require('./../features/topics/posts/createPost');  
 const func = require('./../features/topicFunctions');
+const { result, floor, ceil } = require('lodash');
 
 const con = dbConnection.con;
 
 //topics
 router.get('/', (req, res) => {
-
     let query = 'SELECT * FROM topics ORDER BY id DESC LIMIT 10;';
     con.query(query,(err, result) =>{
-        res.render('topics/topics', {topicData: result});
+        let topics = result;
+        query = 'SELECT COUNT(*) as numberOfTopics FROM topics'
+        con.query(query,(err, result) =>{    
+            let pages = ceil(result[0].numberOfTopics/10);
+            res.render('topics/topics', {topicData: topics, numberOfPages: pages});
+        });
     });
 });
 
@@ -70,7 +75,7 @@ router.post("/create", (req, res) => {
     const validation = new validate(topicData, valRules);
     //if validation was succsesful
     validation.passes(()=>{
-        //getting rid of the diacritics from the name of topic
+        //getting rid of the diacritics from thFROMe name of topic
         addressName = topicData.name.normalize("NFD").replace(/[\u0300-\u036f-\ ]/g, "");
         //checking if topic is already in the database
         const query = 'SELECT * FROM topics WHERE addressName="'+addressName+'";';
@@ -144,17 +149,20 @@ router.get('/:topic/p/:identifier', (req, res)=>{
 });
 router.get('/pg/:pageNum', (req, res) =>{
     const data = {
-        pageNum: parseInt(req.params.pageNum)*15-15,
+        pageNum: parseInt(req.params.pageNum)*10-10,
     }
-    let query = 'SELECT * FROM topics ORDER BY id DESC LIMIT '+data.pageNum+', 15';
+    let query = 'SELECT * FROM topics ORDER BY id DESC LIMIT '+data.pageNum+', 10';
     con.query(query, (err, result)=>{
         if (result.length !== 0){
-            res.render('topics/topics', { topicData: result});
-        }
+            let topics = result;
+            query = 'SELECT COUNT(*) as numberOfTopics FROM topics';
+            con.query(query,(err, result) =>{    
+                let pages = ceil(result[0].numberOfTopics/10);
+                res.render('topics/topics', {topicData: topics, numberOfPages: pages});
+            });        }
         else{
             res.send('to much pages');
         }
-        console.log(result);
     });
 })
 router.get('/:topic/pg/:pageNum', (req, res) =>{

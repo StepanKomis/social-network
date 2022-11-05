@@ -16,20 +16,26 @@
 
     <article>
         <div class="topicContainer">
-        <% for (let i = 0; i < topicData.length; i++) { %>
-            <% const element = topicData[i]; %>
-            <a class="topicLink" href="/t/<%= element.addressName %>">
-                <div class="eachTopic">
-                    <h1 class="topicName">
-                        <%= element.topicName %>
-                    </h1>
-                    <p class="topicDescription">
-                        <%= element.topicDescription %>
-                    </p>
-                </div>
-            </a>
+            <% for (let i = 0; i < topicData.length; i++) { %>
+                <% const element = topicData[i]; %>
+                <a class="topicLink" href="/t/<%= element.addressName %>">
+                    <div class="eachTopic">
+                        <h1 class="topicName">
+                            <%= element.topicName %>
+                        </h1>
+                        <p class="topicDescription">
+                            <%= element.topicDescription %>
+                        </p>
+                    </div>
+                </a>
             <% } %>
+            <div class="pageNumbers">
+                <% for (let i = 1; i <= numberOfPages; i++) { %>
+                    <a class="topicLink" href="/t/pg/<%= i %>">[<%= i %>]</a>
+                <% } %>
+            </div>
         </div>
+
     </article>
 </body>
 </html>
