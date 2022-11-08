@@ -20,16 +20,30 @@
             <p class="topicDescription"><%= description %></p>
         </div>
         <div>
-              <% for( let i = 0; i < postData.length; i++ ) { %>
-                <% const element = postData[i]; %>
-                <a href="/t/<%= adrName %>/p/<%=element.id%>">
-                    <div class="postContainer">
-                        <h2 class="topicName"><%= element.postName %></h2>
-                        <p><%= element.postText%></p> 
-                    </div>
-                </a>
-              <% } %>
+            <div class="pageNumbers">
+                <% for (let i = 1; i <= numberOfPages; i++) { %>
+                    <a class="topicLink" href="/t/<%= adrName %>/pg/<%= i %>">[<%= i %>]</a>
+                <% } %>
+            </div>
+            <% for( let i = 0; i < postData.length; i++ ) { %>
+              <% const element = postData[i]; %>
+              <a href="/t/<%= adrName %>/p/<%=element.id%>">
+                  <div class="postContainer">
+                      <h2 class="topicName"><%= element.postName %></h2>
+                      <p><%= element.postText%></p> 
+                  </div>
+              </a>
+            <% } %>
         </div>
+        <% if (numberOfPages < 3) {%>
+            <div class="pageNumbers">
+                <% for (let i = 1; i <= numberOfPages; i++) { %>
+                    <a class="topicLink" href="/t/<%= adrName %>/pg/<%= i %>">[<%= i %>]</a>
+                <% } %>
+            </div>
+        <% } else {%>
+            lol
+            <% } %>
     </article>
 </body>
 </html>

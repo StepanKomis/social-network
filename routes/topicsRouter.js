@@ -39,19 +39,23 @@ router.get('/:topic', (req, res) => {
     con.query(query,(err, result) =>{
         const name = result[0].topicName;
         const description = result[0].topicDescription
-        query = 'SELECT * FROM posts WHERE topicName = "'+topic+'" ORDER BY id DESC LIMIT 15';
+        query = 'SELECT * FROM posts WHERE topicName = "'+topic+'" ORDER BY id DESC LIMIT 10';
         con.query(query, (err, result) =>{
             const postData = result;
             postData.forEach(element => {
                 element.postText = func.short(element.postText, 150);
                 let test = element.postText;
             });
-            
-            res.render('topics/topic', {
-                name: name,
-                description: description,
-                adrName: adrName,
-                postData: result
+            query = 'SELECT COUNT(*) as numberOfTopics FROM topics';
+            con.query(query,(err, result) =>{    
+                let pages = ceil(result[0].numberOfTopics/10);
+                res.render('topics/topic', {
+                    name: name,
+                    description: description,
+                    adrName: adrName,
+                    postData: postData,
+                    numberOfPages: pages
+                });
             });
         });
     });
@@ -127,7 +131,7 @@ router.post('/:topic/created', (req, res) => {
     })
 });
 
-router.get('/:topic/p/:identifier', (req, res)=>{
+router.get('/:topic/p/:post', (req, res)=>{
     const data = {
         topic: req.params.topic,
         post: req.params.post,
@@ -159,17 +163,54 @@ router.get('/pg/:pageNum', (req, res) =>{
             con.query(query,(err, result) =>{    
                 let pages = ceil(result[0].numberOfTopics/10);
                 res.render('topics/topics', {topicData: topics, numberOfPages: pages});
-            });        }
+            });
+        }
         else{
             res.send('to much pages');
         }
     });
 })
+
 router.get('/:topic/pg/:pageNum', (req, res) =>{
     const data = {
-
+        topic: req.params.topic,
+        pageNum: req.params.pageNum
     }
-
+    if(data.pageNum == 1){
+        res.redirect('/t/'+data.topic);
+    }
+    else{
+        const data = {
+            pageNum: parseInt(req.params.pageNum)*10-10,
+            topic: req.params.topic
+        };
+        let query = 'SELECT * FROM posts ORDER BY id DESC LIMIT '+data.pageNum+', 10';
+        con.query(query, (err, result)=>{
+            if (result.length !== 0){
+                let posts = result;
+                query = 'SELECT COUNT(*) as numberOfTopics FROM posts';
+                con.query(query,(err, result) =>{    
+                    let pages = ceil(result[0].numberOfTopics/10);
+                    let query = 'SELECT * FROM topics WHERE addressName="'+data.topic+'";';
+                    con.query(query,(err, result) =>{
+                        const name = result[0].topicName;
+                        const description = result[0].topicDescription;
+                        const adrName = result[0].addressName;
+                        res.render('topics/topic', {
+                            name: name,
+                            description: description,
+                            adrName: adrName,
+                            postData: posts,
+                            numberOfPages: pages
+                        });
+                    });
+                });
+            }
+            else{
+                res.send('to much pages');
+            }
+        });
+    }
 })
 
 module.exports = router;
