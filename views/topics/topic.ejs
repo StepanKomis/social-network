@@ -27,7 +27,7 @@
             </div>
             <% for( let i = 0; i < postData.length; i++ ) { %>
               <% const element = postData[i]; %>
-              <a href="/t/<%= adrName %>/p/<%=element.id%>">
+              <a href="/p/<%=element.id%>">
                   <div class="postContainer">
                       <h2 class="topicName"><%= element.postName %></h2>
                       <p><%= element.postText%></p> 

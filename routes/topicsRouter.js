@@ -17,8 +17,8 @@ router.get('/', (req, res) => {
     let query = 'SELECT * FROM topics ORDER BY id DESC LIMIT 10;';
     con.query(query,(err, result) =>{
         let topics = result;
-        query = 'SELECT COUNT(*) as numberOfTopics FROM topics'
-        con.query(query,(err, result) =>{    
+        query = 'SELECT COUNT(*) as numberOfTopics FROM topics';
+        con.query(query,(err, result) =>{ 
             let pages = ceil(result[0].numberOfTopics/10);
             res.render('topics/topics', {topicData: topics, numberOfPages: pages});
         });
@@ -103,54 +103,53 @@ router.post("/create", (req, res) => {
 });
 
 router.get('/:topic/new', (req, res) => {
-    res.render('posts/createNew', {topicName: req.params.topic});
 });
 
-router.post('/:topic/created', (req, res) => {
-    const postName = req.body.postName;
-    const uniqueQuery = 'SELECT * FROM posts WHERE postName="'+postName+'";';
-    con.query(uniqueQuery,(err, result) =>{
-        if (result.length > 0) {
-            res.send("post already exists");
-            return;
-        }
-        else{
-            const data = {
-                topic: req.params.topic,
-                name: req.body.postName,
-                author: req.body.author,
-                text: req.body.postText
-            }
-            
-            if (data.author === undefined || data.author ===''){
-                data.author = 'Anonimous';
-            }
-            cp.createPost(data.text, data.name, data.author, data.topic);
-            res.redirect('/t/'+req.params.topic);
-        }
-    })
-});
+//router.post('/:topic/created', (req, res) => {
+//    const postName = req.body.postName;
+//    const uniqueQuery = 'SELECT * FROM posts WHERE postName="'+postName+'";';
+//    con.query(uniqueQuery,(err, result) =>{
+//        if (result.length > 0) {
+//            res.send("post already exists");
+//            return;
+//        }
+//        else{
+//            const data = {
+//                topic: req.params.topic,
+//                name: req.body.postName,
+//                author: req.body.author,
+//                text: req.body.postText
+//            }
+//            
+//            if (data.author === undefined || data.author ===''){
+//                data.author = 'Anonimous';
+//            }
+//            cp.createPost(data.text, data.name, data.author, data.topic);
+//            res.redirect('/t/'+req.params.topic);
+//        }
+//    })
+//});
 
-router.get('/:topic/p/:post', (req, res)=>{
-    const data = {
-        topic: req.params.topic,
-        post: req.params.post,
-    }
-    let query = 'SELECT * FROM posts WHERE topicName = "'+data.topic+'" AND id = '+data.post+'';
-    con.query(query,(err, result) =>{
-        if (result != undefined) {
-            let postData = result[0];
-            query = 'SELECT topicName, addressName FROM topics WHERE addressName = "'+data.topic+'"';
-            con.query(query,(err, result) =>{
-                let topicData = result[0];
-                res.render('posts/post', {postData: postData, topicData: topicData});
-            });
-        }
-        else{
-            res.send('no such post');
-        }
-    });
-});
+//router.get('/:topic/p/:post', (req, res)=>{
+//    const data = {
+//        topic: req.params.topic,
+//        post: req.params.post,
+//    }
+//    let query = 'SELECT * FROM posts WHERE id = '+data.post;
+//    con.query(query,(err, result) =>{
+//        if (result != undefined) {
+//            let postData = result[0];
+//            query = 'SELECT topicName, addressName FROM topics WHERE addressName = "'+data.topic+'"';
+//            con.query(query,(err, result) =>{
+//                let topicData = result[0];
+//                res.render('posts/post', {postData: postData, topicData: topicData});
+//            });
+//        }
+//        else{
+//            res.send('no such post');
+//        }
+//    });
+//});
 router.get('/pg/:pageNum', (req, res) =>{
     const data = {
         pageNum: parseInt(req.params.pageNum)*10-10,
@@ -184,7 +183,7 @@ router.get('/:topic/pg/:pageNum', (req, res) =>{
             pageNum: parseInt(req.params.pageNum)*10-10,
             topic: req.params.topic
         };
-        let query = 'SELECT * FROM posts ORDER BY id DESC LIMIT '+data.pageNum+', 10';
+        let query = 'SELECT * FROM posts WHERE addressName = "'+data.topic+'" ORDER BY id DESC LIMIT '+data.pageNum+', 10';
         con.query(query, (err, result)=>{
             if (result.length !== 0){
                 let posts = result;
@@ -212,5 +211,6 @@ router.get('/:topic/pg/:pageNum', (req, res) =>{
         });
     }
 })
+router.get('/:topic/p/:post')
 
 module.exports = router;

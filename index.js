@@ -5,6 +5,7 @@ const mysql = require('mysql');
 const ct = require('./features/topics/createTopic');
 const dbConnection = require('./database/connection');
 const topicRouter = require('./routes/topicsRouter');
+const postRouter = require('./routes/postRouter');
 
 const { request } = require('express');
 const app = express();
@@ -25,7 +26,7 @@ let con = dbConnection.con;
 
 //routes
 app.use('/t', topicRouter);
-
+app.use('/p', postRouter);
 app.get('/', (req, res) => {
     res.redirect('/t')
 });;
